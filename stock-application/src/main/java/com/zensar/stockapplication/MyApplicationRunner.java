@@ -18,6 +18,7 @@ public class MyApplicationRunner implements ApplicationRunner{
 		String[] sourceArgs = args.getSourceArgs();
 		
 		System.out.println("Application Runner : "+Arrays.toString(sourceArgs));
+		System.out.println("Hello");
 		
 	}
 
