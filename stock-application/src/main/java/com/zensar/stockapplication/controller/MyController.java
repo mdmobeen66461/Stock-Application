@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +27,7 @@ import com.zensar.stockapplication.entity.Stock;
 @RestController
 //@Controller if we use @Controller we have to add @ResponseBody annotation on every Method
 @RequestMapping("/stocks")
+//@RequestMapping(value="/stocks",produces = {MediaType.APPLICATION_XML_VALUE ,MediaType.APPLICATION_JSON_VALUE},consumes ={MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
 //@CrossOrigin("*")
 public class MyController {
 	
@@ -40,7 +42,7 @@ public class MyController {
 	//Read all stock
 	//http://localhost:5000/stocks
 	//@GetMapping("/stocks")
-	@RequestMapping( method=RequestMethod.GET)
+	@RequestMapping( method=RequestMethod.GET,produces = {MediaType.APPLICATION_XML_VALUE ,MediaType.APPLICATION_JSON_VALUE})
 	//@ResponseBody
 	public List<Stock> getAllStock(){
 		return stocks;
@@ -64,7 +66,7 @@ public class MyController {
 	}*/
 	
 	
-	@RequestMapping(value="/{stockId}", method=RequestMethod.GET)
+	@RequestMapping(value="/{stockId}", method=RequestMethod.GET,produces = {MediaType.APPLICATION_XML_VALUE ,MediaType.APPLICATION_JSON_VALUE},consumes ={MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
 	public Stock getStock(@PathVariable long stockId) {
 		
 		
@@ -99,7 +101,8 @@ public class MyController {
 	//@PostMapping("/stocks")
 	//Create a new stock
 	//@RequestMapping(value="/stocks",method = RequestMethod.POST)
-	@RequestMapping(method = RequestMethod.POST)
+	//@RequestMapping(method = RequestMethod.POST)
+    @PostMapping(produces = {MediaType.APPLICATION_XML_VALUE ,MediaType.APPLICATION_JSON_VALUE},consumes ={MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE} )
 	public ResponseEntity<Stock> createStock(@RequestBody Stock stock,@RequestHeader("auth-token") String token) {
 		
 		if(token.equals("mm66461")) {
@@ -126,7 +129,7 @@ public class MyController {
 	}
 	
 	//@PutMapping("/stocks/{stockId}")
-	@PutMapping("/{stockId}")
+	@PutMapping(value ="/{stockId}",produces = {MediaType.APPLICATION_XML_VALUE ,MediaType.APPLICATION_JSON_VALUE},consumes ={MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
 	public Stock updateStock(@PathVariable int stockId,@RequestBody Stock stock) {
 		Stock avaibleStock=getStock(stockId);
 		avaibleStock.setMarketName(stock.getMarketName());
@@ -137,16 +140,15 @@ public class MyController {
 		
 	}
 	
-	@RequestMapping(value="/test",method= {RequestMethod.GET,RequestMethod.POST})
-	public void test() {
-		System.out.println("Inside test method");
-	}
-	
+//	@RequestMapping(value="/test",method= {RequestMethod.GET,RequestMethod.POST})
+//	public void test() {
+//		System.out.println("Inside test method");
+//	}
+//	
 	//To Remove All stocks
 	@DeleteMapping
 	public ResponseEntity<String> deleteAllStocks(){
 		stocks.removeAll(stocks);
-		
 		return new ResponseEntity<String>("All Stocks Deleted",HttpStatus.OK);
 	}
 	
