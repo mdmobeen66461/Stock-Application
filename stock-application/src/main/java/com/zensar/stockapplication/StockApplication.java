@@ -21,7 +21,7 @@ public class StockApplication extends SpringBootServletInitializer{
 //		s.setMarketName("nft");
 //		System.out.println(s.getMarketName());
 		
-		System.out.println("Hello");
+		System.out.println("hello world");
 		
 	}
 
