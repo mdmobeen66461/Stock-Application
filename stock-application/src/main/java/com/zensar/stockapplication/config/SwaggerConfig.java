@@ -1,4 +1,4 @@
-package com.zensar.stockapplication.config;
+//package com.zensar.stockapplication.config;
 
 /*@Configuration
 public class SwaggerConfig {
